@@ -1,0 +1,22 @@
+POSTURA ROUND 2 — LOCKED LOGIC
+
+READINESS
+Good Posture Range: default 50°–70°, user-adjustable within 50°–100°.
+
+Rule:
+Good Min <= Current Angle <= Good Max -> READY
+Current Angle < Good Min or Current Angle > Good Max -> CONFLICT
+
+LIVE MONITORING
+Firmware continues using:
+Deviation = abs(Current Angle - firmware baseline)
+Deviation <= Threshold -> Good posture
+Deviation > Threshold -> Poor posture
+
+Live Threshold is independent from the Good Posture Range and remains 1°–45°.
+The app sends live threshold changes as THRESHOLD:<value> to the existing packed firmware.
+
+RECHECK
+Only relevant after a readiness conflict.
+Recheck uses fresh current-angle readings from BLE and applies the same range rule.
+Recheck does not recalibrate or restart the ESP32.
